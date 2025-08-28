@@ -30,6 +30,27 @@ def fetch_courses():
             continue
         
         title = cols[0].text.strip()
-        city = cols[1].t
+        city = cols[1].text.strip()
+        date_text = cols[2].text.strip()  # Örn: "08.09.2025 - 13.09.2025"
+        link = cols[3].find("a")["href"] if cols[3].find("a") else ""
+
+        start_date_str = date_text.split(" - ")[0]
+        start_date = datetime.strptime(start_date_str, "%d.%m.%Y")
+        
+        if start_date > REFERENCE_DATE:
+            upcoming_courses.append(f"{title}\n{city}\nTarih: {date_text}\n{link}")
+
+    return upcoming_courses
+
+def send_telegram(messages):
+    for msg in messages:
+        bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
+
 if __name__ == "__main__":
-    send_telegram(["Test mesajı - bot doğru çalışıyor mu?"])
+    # 🔹 Test mesajı
+    send_telegram(["✅ Test: Bot çalışıyor ve mesaj gönderebiliyor!"])
+
+    # 🔹 Asıl kurs kontrolü
+    courses = fetch_courses()
+    if courses:
+        send_telegram(courses)
