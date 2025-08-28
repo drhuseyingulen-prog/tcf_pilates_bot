@@ -48,10 +48,11 @@ async def send_telegram(messages):
         await bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
 
 if __name__ == "__main__":
-    # 🔹 Test mesajı
-    asyncio.run(send_telegram(["✅ Test: Bot çalışıyor ve mesaj gönderebiliyor!"]))
-
     # 🔹 Asıl kurs kontrolü
     courses = fetch_courses()
     if courses:
         asyncio.run(send_telegram(courses))
+    else:
+        # İsteğe bağlı olarak, kurs bulunamadığında bir şey yapmak isterseniz bu bloğu kullanabilirsiniz.
+        # Örneğin: asyncio.run(send_telegram(["Mevcut veya yeni kurs bulunamadı."]))
+        pass
