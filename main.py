@@ -31,5 +31,5 @@ def fetch_courses():
         
         title = cols[0].text.strip()
         city = cols[1].t
-
-send_telegram(["Test mesajı - bot doğru çalışıyor mu?"])
+if __name__ == "__main__":
+    send_telegram(["Test mesajı - bot doğru çalışıyor mu?"])
