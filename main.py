@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import os
 from telegram import Bot
+import asyncio
 
 # Secrets üzerinden alıyoruz
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
@@ -42,15 +43,15 @@ def fetch_courses():
 
     return upcoming_courses
 
-def send_telegram(messages):
+async def send_telegram(messages):
     for msg in messages:
-        bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
+        await bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=msg)
 
 if __name__ == "__main__":
     # 🔹 Test mesajı
-    send_telegram(["✅ Test: Bot çalışıyor ve mesaj gönderebiliyor!"])
+    asyncio.run(send_telegram(["✅ Test: Bot çalışıyor ve mesaj gönderebiliyor!"]))
 
     # 🔹 Asıl kurs kontrolü
     courses = fetch_courses()
     if courses:
-        send_telegram(courses)
+        asyncio.run(send_telegram(courses))
