@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
-import config
 from telegram import Bot
 
 bot = Bot(token=config.TELEGRAM_BOT_TOKEN)
